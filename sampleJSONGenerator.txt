@@ -1,0 +1,29 @@
+[
+  '{{repeat(10, 15)}}',
+  {
+    id: '{{guid()}}',
+    company: '{{company().toUpperCase()}}',
+    email: '{{email()}}',
+    phone: '+1 {{phone()}}',
+    address: {
+      firstLine: '{{integer(100, 999)}} {{street()}}',
+      secondLine: null,
+      city: '{{city()}}',
+      state: '{{state()}}',
+      zip: '{{integer(10000, 99999)}}'
+    },
+    registered: '{{date(new Date(2014, 0, 1), new Date(), "YYYY-MM-ddThh:mm:ss Z")}}',
+    gpsLocation: {
+     latitude: '{{floating(-90.000001, 90)}}',
+     longitude: '{{floating(-180.000001, 180)}}'
+    },
+    acceptedClients: '{{integer(1, 10)}}',
+    totalBeds: '{{integer(30, 90)}}',
+    occupiedBeds: function (tags){
+      return this.totalBeds - tags.integer(0, 30);},
+    intakeStart: '{{integer(1080, 1320)}}',
+    intakeEnd: function (tags){
+      return this.intakeStart + 120;},
+    description: '{{lorem(1, "paragraphs")}}'
+  }
+]
