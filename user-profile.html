@@ -15,10 +15,6 @@
             {
                 $data = $_GET["data"];
             }
-            if(isset($_GET["firstname"]))
-            {
-                $firstname = $_GET["firstname"];
-            }
         ?>
 
         
@@ -28,14 +24,29 @@
               $string = file_get_contents("data.json");
               $json_a = json_decode($string, true);
 
+              if(isset($_GET["firstname"]))
+              {
+                  $firstname = $_GET["firstname"];
+                  
+                  // or if you want to change all entries with activity_code "1"
+                  foreach ($json_a as $users => $user) {
+                    if ($data == $user['UUID']) {
+                          $json_a[$users]['First_Name'] = $firstname;
+                      }
+                  }
+
+                  $newJsonString = json_encode($json_a);
+                  file_put_contents('data.json', $newJsonString);
+              }
+
               foreach ($json_a as $users => $user) {
                 if ($data == $user['UUID']) {
                   echo '<h2>Name: ' . $user['First_Name'] . ' '. $user['Last_Name'] . '</h2>';
-                  echo '<form class="form-inline">
+                  echo '<form class="form-inline" action="user-profile.html?data=' . $user['UUID'] . '">
                           <div class="form-group">
                             <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
                             <div class="input-group">
-                              
+                              <input type="text" name="data" class="form-control hidden" id="firstName" placeholder="Edit Name" value="'.$user['UUID'].'">
                               <input type="text" name="firstname" class="form-control" id="firstName" placeholder="Edit Name">
                             
                             </div>
@@ -62,6 +73,10 @@
                   }
                 }
               }
+
+
+              
+              
 
             ?>
 
