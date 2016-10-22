@@ -10,24 +10,70 @@
         <?php include("templates/sidebar.tpl.php"); ?>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">User Profile</h1>
-          
+          <?php
+            if(isset($_GET["data"]))
+            {
+                $data = $_GET["data"];
+            }
+            if(isset($_GET["firstname"]))
+            {
+                $firstname = $_GET["firstname"];
+            }
+        ?>
+
+        
           <div class="row">
         	<div class="col-xs-12 col-sm-6">
-        		<h2>Name: Aric Sangchat</h2>
-				<h2>Phone: 714-394-2762</h2>
-				<h2>Email: info@info.com</h2>
-				<h2>Sex: Male</h2>
-				<h2>Age: 27</h2>
-				<hr>
-				<h2>Mental: Sober</h2>
-				<h2>Health: Alive</h2>
-				<h2>Children: No</h2>
+    				<?php 
+              $string = file_get_contents("data.json");
+              $json_a = json_decode($string, true);
+
+              foreach ($json_a as $users => $user) {
+                if ($data == $user['UUID']) {
+                  echo '<h2>Name: ' . $user['First_Name'] . ' '. $user['Last_Name'] . '</h2>';
+                  echo '<form class="form-inline">
+                          <div class="form-group">
+                            <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
+                            <div class="input-group">
+                              
+                              <input type="text" name="firstname" class="form-control" id="firstName" placeholder="Edit Name">
+                            
+                            </div>
+                          </div>
+                          <button type="submit" class="btn btn-primary">Save</button>
+                        </form>';
+                  echo '<h2>SSN #: ' . $user['SSN'] . '</h2>';
+                  echo '<h2>Date of Birth: ' . $user['DOB'] . '</h2>';
+                  if ($user['Asian'] == 1) {
+                    echo '<h2>Ethnicity: Asian</h2>';
+                  } elseif ($user['Black'] == 1) {
+                    echo '<h2>Ethnicity: Black</h2>';
+                  } elseif ($user['NativeHIOtherPacific'] == 1) {
+                    echo '<h2>Ethnicity: NativeHIOtherPacific </h2>';
+                  } elseif ($user['White'] == 1) {
+                    echo '<h2>Ethnicity: White</h2>';
+                  } elseif ($user['RaceNone'] == 1) {
+                    echo '<h2>Ethnicity: N/A</h2>';
+                  }
+                  if ($user['Gender'] == 1) {
+                    echo '<h2>Gender: Male</h2>';
+                  } elseif ($user['Gender'] == 0) {
+                    echo '<h2>Gender: Female</h2>';
+                  }
+                }
+              }
+
+            ?>
+
+            
+
         	</div>
         	<div class="col-xs-12 col-sm-6">
         		<h2><a href="">Edit User Profile</a></h2>
         	</div>
         </div>
 
+        
           
 
 
