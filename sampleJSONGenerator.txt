@@ -2,12 +2,12 @@
   '{{repeat(10, 15)}}',
   {
     id: '{{guid()}}',
-    provider: '{{company().toUpperCase()}}',
+    name: '{{company().toUpperCase()}}',
     email: '{{email()}}',
     phone: '+1 {{phone()}}',
     address: {
-      firstLine: '{{integer(100, 999)}} {{street()}}',
-      secondLine: null,
+      line1: '{{integer(100, 999)}} {{street()}}',
+      line2: null,
       city: '{{city()}}',
       state: '{{state()}}',
       zip: '{{integer(10000, 99999)}}'
@@ -18,7 +18,13 @@
      longitude: '{{floating(-180.000001, 180)}}'
     },
     milesAway: '{{floating(0, 10)}}',
-    acceptedClients: '{{integer(1, 10)}}',
+    acceptedClients: {
+      men: '{{bool()}}',
+      women: '{{bool()}}',
+      children: '{{bool()}}',
+      veteran: '{{bool()}}',
+      handicap: '{{bool()}}'
+    },
     totalBeds: '{{integer(30, 90)}}',
     occupiedBeds: function (tags){
       return this.totalBeds - tags.integer(0, 30);},
