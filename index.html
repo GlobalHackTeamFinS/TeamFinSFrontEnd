@@ -35,13 +35,13 @@
               <span class="text-muted">Something else</span>
             </div>
           </div> -->
-          <h2 class="sub-header"><a class="active" href="index.html">List of People in Shelter</a> | <a href="listofpeoplewaiting.html">List of People Waiting</a></h2>
+          <h2 class="sub-header"><a class="active" href="index.html">List of Users</a> | <a href="listofpeoplewaiting.html">List of People Waiting</a></h2>
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr>
                   <th>User Id</th>
-                  <th>Date of Birth</th>
+                  <th>Age</th>
                   <th>Gender</th>
                   <th>Date Created</th>
                   <th>View Profile</th>
@@ -53,10 +53,20 @@
                   $json_a = json_decode($string, true);
 
                   foreach ($json_a as $users => $user) {
+                      //date in mm/dd/yyyy format; or it can be in other formats as well
+                      $birthDate = $user['DOB'];
+                      //explode the date to get month, day and year
+                      $birthDate = explode("/", $birthDate);
+                      //get age from date or birthdate
+                      $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md")
+                        ? ((date("Y") - $birthDate[2]) - 1)
+                        : (date("Y") - $birthDate[2]));
+                      //echo "Age is:" . $age;
+
                       echo '<tr>';
                       echo '<td>' . $user['UserID'] . '</td>';
-                      echo '<td>' . $user['DOB'] . '</td>';
-                      echo '<td>' . $user['Gender'] . '</td>';
+                      echo '<td>' . ($age == 2016 ? 'N/A' : $age) . '</td>';
+                      echo '<td>' . ($user['Gender'] == 1 ? 'Male' : 'Female') . '</td>';
                       echo '<td>' . $user['Date_Created'] . '</td>';
                       echo '<td><a href="user-profile.html?data=' . $user['UUID'] . '">' . 'View Profile' . '</a></td>';
                       echo '</tr>';
