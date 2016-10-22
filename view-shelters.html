@@ -48,26 +48,16 @@
               </thead>
               <tbody>
                 <?php 
-                  $string = file_get_contents("data.json");
+                  $string = file_get_contents("sampleShelters.json");
                   $json_a = json_decode($string, true);
 
-                  foreach ($json_a as $users => $user) {
-                      //date in mm/dd/yyyy format; or it can be in other formats as well
-                      $birthDate = $user['DOB'];
-                      //explode the date to get month, day and year
-                      $birthDate = explode("/", $birthDate);
-                      //get age from date or birthdate
-                      $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[0], $birthDate[1], $birthDate[2]))) > date("md")
-                        ? ((date("Y") - $birthDate[2]) - 1)
-                        : (date("Y") - $birthDate[2]));
-                      //echo "Age is:" . $age;
-
+                  foreach ($json_a as $providers => $provider) {
                       echo '<tr>';
-                      echo '<td>' . $user['UserID'] . '</td>';
+                      echo '<td>' . $provider['company'] . '</td>';
                       echo '<td>' . ($age == 2016 ? 'N/A' : $age) . '</td>';
                       echo '<td>' . ($user['Gender'] == 1 ? 'Male' : 'Female') . '</td>';
                       echo '<td>' . $user['Date_Created'] . '</td>';
-                      echo '<td><a href="user-profile.html?data=' . $user['UUID'] . '">' . 'View Profile' . '</a></td>';
+                      echo '<td><a href="view-shelters.html?data=' . $provider['id'] . '">' . 'View Profile' . '</a></td>';
                       echo '</tr>';
                   }
                 ?>
