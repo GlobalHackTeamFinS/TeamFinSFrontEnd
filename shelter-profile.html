@@ -23,56 +23,16 @@
               $string = file_get_contents("sampleShelters.json");
               $json_a = json_decode($string, true);
 
-              // if(isset($_GET["firstname"]))
-              // {
-              //     $firstname = $_GET["firstname"];
-                  
-              //     // or if you want to change all entries with activity_code "1"
-              //     foreach ($json_a as $users => $user) {
-              //       if ($data == $user['UUID']) {
-              //             $json_a[$users]['First_Name'] = $firstname;
-              //         }
-              //     }
-
-              //     $newJsonString = json_encode($json_a);
-              //     file_put_contents('sampleShelters.json', $newJsonString);
-              // }
 
               foreach ($json_a as $providers => $provider) {
                 if ($data == $provider['id']) {
-                  echo '<h2>Name: ' . $provider['First_Name'] . ' '. $user['Last_Name'] . '</h2>';
-                  echo '<form class="form-inline" action="user-profile.html?data=' . $user['UUID'] . '">
-                          <div class="form-group">
-                            <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
-                            <div class="input-group">
-                              <input type="text" name="data" class="form-control hidden" id="firstName" placeholder="Edit Name" value="'.$user['UUID'].'">
-                              <input type="text" name="firstname" class="form-control" id="firstName" placeholder="Edit Name">
-                            
-                            </div>
-                          </div>
-                          <button type="submit" class="btn btn-primary">Save</button>
-                        </form>';
-                  echo '<h2>SSN #: ' . $user['SSN'] . '</h2>';
-                  echo '<h2>Date of Birth: ' . $user['DOB'] . '</h2>';
-                  if ($user['Asian'] == 1) {
-                    echo '<h2>Ethnicity: Asian</h2>';
-                  } elseif ($user['Black'] == 1) {
-                    echo '<h2>Ethnicity: Black</h2>';
-                  } elseif ($user['NativeHIOtherPacific'] == 1) {
-                    echo '<h2>Ethnicity: NativeHIOtherPacific </h2>';
-                  } elseif ($user['White'] == 1) {
-                    echo '<h2>Ethnicity: White</h2>';
-                  } elseif ($user['RaceNone'] == 1) {
-                    echo '<h2>Ethnicity: N/A</h2>';
-                  }
-                  if ($user['Gender'] == 1) {
-                    echo '<h2>Gender: Male</h2>';
-                  } elseif ($user['Gender'] == 0) {
-                    echo '<h2>Gender: Female</h2>';
-                  }
+                  echo '<h2>Name: ' . $provider['provider'] . '</h2>';
+                  echo '<h2>Email: ' . $provider['email'] . '</h2>';
+                  echo '<h2>Phone: ' . $provider['phone'] . '</h2>';
+                  echo '<h2>Address:<br />' . $provider['address']['firstLine'].'<br /> '.$provider['address']['city'].', '.$provider['address']['state'].' '.$provider['address']['zip'].'</h2>';
+                  echo '<h2>Description:</h2>' . '<p>' . $provider['description'] . '</p>';
                 }
               }
-
 
             ?>
         	</div>

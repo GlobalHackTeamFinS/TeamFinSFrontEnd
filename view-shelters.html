@@ -41,23 +41,36 @@
                 <tr>
                   <th>Name</th>
                   <th>Proximity From You</th>
-                  <th>Vacancy</th>
+                  <th>Beds Available</th>
                   <th>Type of User Accepted</th>
                   <th>Contact Shelter</th>
                 </tr>
               </thead>
               <tbody>
-                <?php 
-                  $string = file_get_contents("sampleShelters.json");
-                  $json_a = json_decode($string, true);
+                <?php
+                  // Sorts by closest provider to you
+                  $json = file_get_contents("sampleShelters.json");
+                  $json_arr = json_decode($json, true);
+                  usort(
+                    $json_arr, 
+                    function($a, $b) { 
+                      if ($a['milesAway'] == $b['milesAway']) {
+                        return 0;
+                      }
+                      return ($a['milesAway'] < $b['milesAway']) ? -1 : 1;
+                  });
+                  $json = json_encode($json_arr);
+
+                  $json_a = json_decode($json, true);
 
                   foreach ($json_a as $providers => $provider) {
+
                       echo '<tr>';
                       echo '<td>' . $provider['provider'] . '</td>';
-                      echo '<td>' . $provider['address']['firstLine'] . '</td>';
-                      echo '<td>' . ($user['Gender'] == 1 ? 'Male' : 'Female') . '</td>';
+                      echo '<td>' . $provider['milesAway'] . '</td>';
+                      echo '<td>' . $bedsAvail = $provider['totalBeds'] - $provider['occupiedBeds'] . '</td>';
                       echo '<td>' . $user['Date_Created'] . '</td>';
-                      echo '<td><a href="view-shelters.html?data=' . $provider['id'] . '">' . 'View Profile' . '</a></td>';
+                      echo '<td><a href="shelter-profile.html?data=' . $provider['id'] . '">' . 'Contact' . '</a></td>';
                       echo '</tr>';
                   }
                 ?>
