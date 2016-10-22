@@ -53,8 +53,8 @@
 
                   foreach ($json_a as $providers => $provider) {
                       echo '<tr>';
-                      echo '<td>' . $provider['company'] . '</td>';
-                      echo '<td>' . ($age == 2016 ? 'N/A' : $age) . '</td>';
+                      echo '<td>' . $provider['provider'] . '</td>';
+                      echo '<td>' . $provider['address']['firstLine'] . '</td>';
                       echo '<td>' . ($user['Gender'] == 1 ? 'Male' : 'Female') . '</td>';
                       echo '<td>' . $user['Date_Created'] . '</td>';
                       echo '<td><a href="view-shelters.html?data=' . $provider['id'] . '">' . 'View Profile' . '</a></td>';
